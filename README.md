@@ -1,14 +1,17 @@
 # Donor Segmentation & Personalized Communication
 
-An n8n workflow that turns a nonprofit's donor spreadsheet into RFM + behavioral segments, then drafts segment-appropriate outreach using a local LLM — so small nonprofits can personalize donor communication without a data team or a paid marketing stack.
+An n8n workflow that turns a nonprofit's donor spreadsheet into RFM + behavioral segments, then drafts segment-appropriate outreach using a local LLM — so small nonprofits can personalize donor communication without a paid marketing stack.
 
 > **Status:** v1 template. Human-in-the-loop by design — this workflow drafts personalized messages, it does not send them automatically.
+
+<img width="1426" height="322" alt="donor-workflow" src="https://github.com/user-attachments/assets/ef00cd83-b458-49c3-8795-3e19900963f4" />
+
 
 ---
 
 ## Why this exists
 
-Nonprofits sit on donor data (gift history, event attendance, email engagement) that almost never gets turned into personalized outreach, because segmenting donors by hand is slow, easy to let go stale, and generally only happens once a year around a big campaign.
+Nonprofits sit on donor data (gift history, event attendance, email engagement) that almost never gets turned into personalized outreach, because segmenting donors by hand is slow, easy to let go stale, and generally only happens once a year around a big campaign. On average, nonprofit staff spend **15 to 20 minutes** manually drafting a single personalized thank-you letter or message to a donor. 
 
 The cost of that is real: generic, one-size-fits-all appeals underperform segmented ones, and donor churn is expensive — it's far cheaper to retain an existing donor than acquire a new one. Better segmentation → better-targeted communication → better retention → more predictable recurring revenue for the org.
 
@@ -22,13 +25,13 @@ This is **not** meant to replace a full CDP/marketing automation platform (Sales
 
 ## What it does
 
-1. **Ingests** a donor dataset (name, contact info, donation amounts/dates, communication history, event attendance).
+1. **Ingests** a donor dataset from Google Sheet (name, contact info, donation amounts/dates, communication history, event attendance).
 2. **Validates** the data and flags malformed rows.
 3. **Scores RFM** — Recency, Frequency, Monetary — to bucket donors into segments (e.g., Champions, Loyal, At-Risk, Lapsed, New/First-Time).
 4. **Layers behavioral segmentation** on top — engagement patterns like event-driven vs. email-only donors, campaign responsiveness, channel preference.
 5. **Maps each segment to a communication strategy** — tone, ask type, channel, cadence.
 6. **Drafts personalized copy** for each segment using a LLM.
-7. **Outputs drafts** to a review queue / CSV / connected tool — a human approves and sends, the workflow doesn't send on its own.
+7. **Outputs drafts** to initial donor Google Sheet under a new column called Personalized Message for review. A human approves and sends, the workflow doesn't send on its own.
 
 ## Why a local LLM
 
@@ -44,7 +47,8 @@ Donor data is PII, and a nonprofit shouldn't have to ship its donor list to a th
 
 - [n8n](https://n8n.io) (self-hosted via Docker, or the n8n desktop app)
 - [Ollama](https://ollama.com) running a local instruction-tuned model (developed against Llama 3.1 8B; swap in whatever fits your hardware)
-- A donor dataset in CSV format matching the schema below (or a synthetic one — see [Testing](#testing))
+- Google Drive API and Google Sheet API enablement
+- A Google Sheet donor dataset matching the schema below (or a synthetic one — see [Testing](#testing))
 
 ### Expected input schema
 
@@ -66,7 +70,7 @@ More fields (especially engagement/behavioral ones) produce better behavioral se
 1. Clone this repo / import the workflow JSON into n8n.
 2. Install and start Ollama locally; pull your chosen model.
 3. Point the workflow's LLM node at your local Ollama instance.
-4. Load your donor CSV (or generate a synthetic one — see below).
+4. Load your donor CSV (or generate a synthetic one).
 5. Run the workflow.
 6. Review the drafted, segmented outputs before sending.
 
@@ -76,7 +80,7 @@ Don't test with real donor PII. Use a synthetic dataset instead — a Python scr
 
 ## Configuration notes
 
-- RFM thresholds and segment definitions are currently set to sensible defaults — see the sticky notes inside the workflow for where to adjust them for your org's own donation patterns.
+- RFM thresholds and segment definitions are currently set to sensible defaults
 - The segment→treatment mapping (which tone/ask/channel goes with which segment) is meant to be edited to match your org's voice.
 
 ## Roadmap / open questions
