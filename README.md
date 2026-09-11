@@ -24,7 +24,7 @@ The cost of that is real: generic, one-size-fits-all appeals underperform segmen
 
 Small-to-mid-size nonprofits that want to increase donor retention but don't have a dedicated CRM/analytics team.
 
-This is **not** meant to replace a full marketing automation platform (e.g, Salesforce NPSP, Bloomerang, etc) — it's a lightweight alternative for organizations that don't have one, and could later integrate with those tools rather than compete with them.
+This is **not** meant to replace existing donor management and segmentation systems (e.g, Salesforce NPSP, Bloomerang, etc) — it's a lightweight alternative for organizations that don't have one, and could later integrate with those tools rather than compete with them.
 
 ## What it does
 
