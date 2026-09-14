@@ -4,7 +4,7 @@ An n8n workflow that turns a nonprofit's donor spreadsheet into RFM + behavioral
 
 ### Link to workflow: 
 
-https://n8n.io/workflows/19358-segment-donors-and-generate-personalized-messages-with-google-sheets-and-ollama/
+https://n8n.io/workflows/19509-segment-donors-and-draft-personalized-outreach-with-google-sheets-and-ollama/
 
 > **Status:** v1 template. Human-in-the-loop by design — this workflow drafts personalized messages, it does not send them automatically.
 
